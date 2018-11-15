@@ -1,6 +1,4 @@
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-
-
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const Html = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const webpack = require('webpack');
@@ -9,29 +7,60 @@ const PurifyCssWebpack = require('purifycss-webpack');
 const glob = require('glob');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
+const NODE_ENV = process.env.NODE_ENV;
+
+console.log(NODE_ENV);
+
 module.exports = {
-  mode: 'development',
+  mode: NODE_ENV === 'dev' ? 'development' : 'production',
   // devtool: 'source-map',
   entry: {
-    index: './index.js',
-    index1: './index1.js',
-    vendor2: ['jquery']
+    index: ['./js/index.js'],
+    index1: './js/index1.js',
+    common: ['jquery']
   },
   output: {
     path: path.join(__dirname, 'outputFile'),
-    filename: '[name].[hash].js',
-    chunkFilename: '[name].[hash].js'
+    // publicPath: NODE_ENV === 'dev' ? '' : 'http://dqr.com',
+    filename: 'js/[name].js'
   },
   module: {
     rules: [
-      { test: /\.js|\.jsx/, exclude: '/node_modules/', loader: 'babel-loader' },
       {
-        test: /\.css$/, exclude: '/node_modules/', use: [{
-          loader: MiniCssExtractPlugin.loader,
-          options: {
-            publicPath: './'  // 相对输出路径
+        test: /\.js$/,
+        exclude: '/node_modules/',
+        use: [
+          'babel-loader',
+          'eslint-loader'
+        ]
+      },
+      {
+        test: /\.tsx?$/,
+        exclude: '/node_modules/',
+        use: [
+          'ts-loader',
+          {
+            loader: 'tslint-loader',
+            options: {
+              configuration: {
+                rules: {
+                  quotemark: [true, 'double']
+                }
+              }
+            }
           }
-        }, 'css-loader', 'postcss-loader']
+        ]
+      },
+      {
+        test: /\.css$/,
+        exclude: '/node_modules/',
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader
+          },
+          'css-loader',
+          'postcss-loader'
+        ]
       },
       {
         test: /\.(png|jpg|svg|gif)$/,
@@ -39,8 +68,20 @@ module.exports = {
           {
             loader: 'url-loader',
             options: {
-              limit: 1000,
-              outputPath:'images'  // 相对输出路径
+              limit: 1,
+              outputPath: '/images'  // 相对输出路径
+            }
+          }
+        ]
+      },
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: 'html-loader',
+            options: {
+              attrs: ['img:src'],
+              minimize: NODE_ENV === 'dev' ? false : true
             }
           }
         ]
@@ -48,7 +89,7 @@ module.exports = {
     ]
   },
   plugins: [
-    // new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),  // 
 
     new webpack.HotModuleReplacementPlugin(),
     new CleanWebpackPlugin(['./outputFile']),
@@ -56,57 +97,57 @@ module.exports = {
       filename: "css/[name].css"
     }),
     new Html({
-      template: './index.html',
-      filename: 'index.html',
-      chuncks: ['vendor2', 'index']
-    }),
-    new PurifyCssWebpack({
-      paths: glob.sync(path.join(__dirname, '*.html')) // 同步扫描所有html文件中所引用的css
+      template: 'html/index.html',
+      filename: 'html/index.html'
+      // chunks: ['common','index']  //页面包含的的js文件
     })
   ],
-  /**
- * 优化部分包括代码拆分
- * 且运行时（manifest）的代码拆分提取为了独立的 runtimeChunk 配置 
- */
-  optimization: {
-    splitChunks: {
-      chunks: "all",
-      cacheGroups: {
-        // 提取 node_modules 中代码
-        vendors: {
-          test: /[\\/]node_modules[\\/]/,
-          name: "vendors",
-          chunks: "all"
-        },
-        commons: {
-          // async 设置提取异步代码中的公用代码
-          chunks: "async",
-          name: 'commons-async',
-          /**
-           * minSize 默认为 30000
-           * 想要使代码拆分真的按照我们的设置来
-           * 需要减小 minSize
-           */
-          minSize: 0,
-          // 至少为两个 chunks 的公用代码
-          minChunks: 2
-        }
-      }
-    },
-    /**
-     * 对应原来的 minchunks: Infinity
-     * 提取 webpack 运行时代码
-     * 直接置为 true 或设置 name
-     */
-    runtimeChunk: {
-      name: 'manifest'
-    }
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js']
   },
+  /**
+   * 优化部分包括代码拆分
+   * 且运行时（manifest）的代码拆分提取为了独立的 runtimeChunk 配置 
+   */
+  // optimization: {
+  //   splitChunks: {
+  //     chunks: "all",
+  //     cacheGroups: {
+  //       // 提取 node_modules 中代码
+  //       vendors: {
+  //         test: /[\\/]node_modules[\\/]/,
+  //         name: "vendors",
+  //         chunks: "all"
+  //       },
+  //       commons: {
+  //         // async 设置提取异步代码中的公用代码
+  //         chunks: "async",
+  //         name: 'commons-async',
+  //         /**
+  //          * minSize 默认为 30000
+  //          * 想要使代码拆分真的按照我们的设置来
+  //          * 需要减小 minSize
+  //          */
+  //         minSize: 0,
+  //         // 至少为两个 chunks 的公用代码
+  //         minChunks: 2,
+  //       }
+  //     }
+  //   },
+  //   /**
+  //    * 对应原来的 minchunks: Infinity
+  //    * 提取 webpack 运行时代码
+  //    * 直接置为 true 或设置 name
+  //    */
+  //   runtimeChunk: {
+  //     name: 'manifest'
+  //   }
+  // },
   // 配置本地服务器
   devServer: {
     contentBase: './outputFile',
+    host:'192.168.2.162',
     port: 4200,
-    // inline: true,
     hot: true,
     historyApiFallback: true
   }

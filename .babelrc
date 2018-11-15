@@ -1,20 +1,11 @@
 {
   "presets": [
     [
-      "env",
+      "@babel/preset-env",
       {
-        "modules": false,
-        "targets": {
-          "browsers": [
-            "> 1%",
-            "last 2 versions",
-            "not ie <= 8"
-          ]
-        }
-      }
+        "useBuiltIns": "usage"
+      },
+      "@babel/preset-typescript"
     ]
-  ],
-  "plugins": [
-    "syntax-dynamic-import"
   ]
 }
