@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "set NODE_ENV=dev && webpack-dev-server --open",
+    "dev": "set NODE_ENV=dev&& webpack-dev-server --open",
     "prod": "set NODE_ENV=prod && webpack",
     "build": "set NODE_ENV=prod && webpack"
   },

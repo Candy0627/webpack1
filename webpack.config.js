@@ -12,7 +12,7 @@ let NODE_ENV = process.env.NODE_ENV.trim();
 
 module.exports = {
   mode: NODE_ENV === 'dev' ? 'development' : 'production',
-  // devtool: 'source-map',
+  devtool: 'source-map',
   entry: {
     index: ['./js/index.js'],
     index1: './js/index1.js',
@@ -146,8 +146,7 @@ module.exports = {
   // 配置本地服务器
   devServer: {
     contentBase: './outputFile',
-    compress: true,
-    host: '192.168.2.162',
+    host:'127.0.0.1',
     port: 4200,
     hot: true,
     historyApiFallback: true
