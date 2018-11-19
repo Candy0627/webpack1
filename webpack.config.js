@@ -7,9 +7,8 @@ const PurifyCssWebpack = require('purifycss-webpack');
 const glob = require('glob');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-const NODE_ENV = process.env.NODE_ENV;
-
-console.log(NODE_ENV);
+// 命令行中可能会输入空格
+let NODE_ENV = process.env.NODE_ENV.trim();
 
 module.exports = {
   mode: NODE_ENV === 'dev' ? 'development' : 'production',
@@ -21,7 +20,8 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, 'outputFile'),
-    // publicPath: NODE_ENV === 'dev' ? '' : 'http://dqr.com',
+    publicPath: NODE_ENV === 'dev' ? '/' : 'http://dqr.com',
+    chunkFilename:'js/[name].[chunkhash].js',
     filename: 'js/[name].js'
   },
   module: {
@@ -69,7 +69,7 @@ module.exports = {
             loader: 'url-loader',
             options: {
               limit: 1,
-              outputPath: '/images'  // 相对输出路径
+              outputPath: 'images'  // 相对输出路径
             }
           }
         ]
@@ -146,7 +146,8 @@ module.exports = {
   // 配置本地服务器
   devServer: {
     contentBase: './outputFile',
-    host:'192.168.2.162',
+    compress: true,
+    host: '192.168.2.162',
     port: 4200,
     hot: true,
     historyApiFallback: true
