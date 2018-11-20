@@ -1,31 +1,30 @@
-## babel
+## 针对于专题开发的多页面脚手架
 
-### 进行的转换：
 
-- 语法转换 
-- 功能填充 api
+### 特性
+- 支持最新js特性，api polyfill
+  - js语法检测（eslint
+
+- 支持ts模块开发
+  - ts语法检测（tslint
+
+- 支持最新css特性
+  - 前缀自动填充
+
+- 异步包优化，拆分，提取
+
+- 打包分析
 
 
 ### 使用
 
-- plugins
-  - 针对每个功能特性以及语法进行的编译操作
+```
+开始开发
+npm run dev
 
+开始打包
+npm run build
 
-- presets
-  - 一组针对代码功能特性，语法进行的编译操作
-
-
-### 兼容问题
-
-- babel-ployfill
-- babel-runtime
-  - 问题
-      - 不会模拟实例方法  （例如：'jmz'.padStart(4)）
-
-
-## 问题
-
-- Requires Babel "^7.0.0-0", but was loaded with 
-  - npm i babel-core@7.0.0-bridge.0
-  - npm install babel-loader@next
+查看包
+npm run  analyer
+```
