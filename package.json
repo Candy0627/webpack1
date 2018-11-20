@@ -8,7 +8,8 @@
     "prod": "set NODE_ENV=prod&&  webpack-dev-server",
     "build": "set NODE_ENV=build&& webpack",
     "start": "webpack",
-    "analyer": "set NODE_ENV=analyer&& webpack"
+    "analyer": "set NODE_ENV=analyer&& webpack",
+    "dll":"webpack --config dll.webpack.config.js"
   },
   "author": "jmz",
   "license": "ISC",
@@ -79,6 +80,7 @@
     "g": "^2.0.1",
     "html-withimg-loader": "^0.1.16",
     "jquery": "^3.3.1",
+    "lodash": "^4.17.11",
     "webpack-bundle-analyzer": "^3.0.3"
   }
 }

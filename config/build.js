@@ -1,4 +1,4 @@
 module.exports = function (config) {
-  config.mode = 'production';
+  config.mode = 'development';
   config.output.publicPath = '/';
 }

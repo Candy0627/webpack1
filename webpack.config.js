@@ -4,7 +4,7 @@ const Html = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-
+const webpack=require('webpack');
 const path = require('path');
 const fs = require('fs');
 
@@ -45,7 +45,9 @@ const config = {
   entry: entery,
   output: {
     path: path.join(__dirname, './outputFile/'),
-    filename: '[name]/js/[name].[hash:8].js'
+    filename: '[name]/js/[name].[hash:8].js',
+    chunkFilename:'[name]/js/[name].[hash:8].js',
+    library: '[name]' 
   },
   module: {
     rules: [
@@ -96,7 +98,19 @@ const config = {
     ]
   },
   plugins: [
-    new CleanWebpackPlugin(['./outputFile']),
+    // new CleanWebpackPlugin(['./outputFile']),
+    // 全局变量
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery',
+      'window.$': 'jquery',
+      _map:['lodash','map'] // 模块  导出对象
+    }),
+    new webpack.DllReferencePlugin({       // 敲黑板，这里是重点
+      context: __dirname,                  // 同那个dll配置的路径保持一致
+      manifest: require('./vendor.manifest.json') // manifest的缓存信息
+    }),
     new MiniCssExtractPlugin({
       filename: "[name]/css/[name].css"
     })
