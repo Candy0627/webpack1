@@ -18,11 +18,11 @@
 
 2. 前端工程部分可以使用webpack，babel等工具，针对项目进行搭建基本工程结构
     - github上有的针对专题页面搭建的多页面开发脚手架，支持，ecmascript,css3等型特性
-    地址：[https://github.com/dqrjmz/webpack1]https://github.com/dqrjmz/webpack1
+    地址：[地址](https://github.com/dqrjmz/webpack1)
 
 3. 前端三大框架都可以使用，react,vue,angular,对angular框架使用较多，主要用来开发后台系统，使用ng-zorro-antd（基于angular开发的ui框架），对angular各个技术有不错的了解
 
-4. 对前端的模块化方案，amd,es module 都有不错了解
+4. 对前端的模块化方案，amd,es module 都有不错了解，解决一般项目代码拆分，项目模块化，对项目进行良好的组织，了解其基本运行原理；
 
 5. 熟练使用jquery,zepto,requirejs,lodash等基本的第三方库
 
@@ -40,12 +40,19 @@
 
 1. 财喵
  > iphone上的积分墙应用，是一个混合的app,主要采用angular技术（前台+后台两个系统）
+ - ![后台地址] (http://119.28.86.44:82)
 
 2. 客服聊天系统
  > 提供给公司客服部门对用户进行业务反馈，客户端使用vue,后台使用jquery+dot.js 模板引擎
+ 
+ ![Alt text](./1.png)
+ ![Alt text](./2.png)
 
 3. 各种营销页面
  > pc+ moblie
+ - [地址1](https://login.ss.gamemorefun.net/)
+ - [地址2](https://luna.gamemorefun.net/)
+ - 等等
 
 4. 钉钉e应用
  > 第三方企业固定资产管理
