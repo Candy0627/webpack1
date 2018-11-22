@@ -46,8 +46,8 @@
 2. 客服聊天系统
  > 提供给公司客服部门对用户进行业务反馈，客户端使用vue,后台使用jquery+dot.js 模板引擎
  
- ![Alt text](./1.png)
- ![Alt text](./2.png)
+ ![Alt text](https://github.com/dqrjmz/webpack1/blob/master/doc/1.png)
+ ![Alt text](https://github.com/dqrjmz/webpack1/blob/master/doc/2.png)
 
 3. 各种营销页面
  > pc+ moblie
