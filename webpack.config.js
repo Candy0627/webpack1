@@ -47,7 +47,7 @@ const config = {
     path: path.join(__dirname, './outputFile/'),
     filename: '[name]/js/[name].[hash:8].js',
     chunkFilename:'[name]/js/[name].[hash:8].js',
-    library: '[name]' 
+    // library: '[name]' 
   },
   module: {
     rules: [
@@ -98,19 +98,19 @@ const config = {
     ]
   },
   plugins: [
-    // new CleanWebpackPlugin(['./outputFile']),
+    new CleanWebpackPlugin(['./outputFile']),
     // 全局变量
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery',
-      'window.jQuery': 'jquery',
-      'window.$': 'jquery',
-      _map:['lodash','map'] // 模块  导出对象
-    }),
-    new webpack.DllReferencePlugin({       // 敲黑板，这里是重点
-      context: __dirname,                  // 同那个dll配置的路径保持一致
-      manifest: require('./vendor.manifest.json') // manifest的缓存信息
-    }),
+    // new webpack.ProvidePlugin({
+    //   $: 'jquery',
+    //   jQuery: 'jquery',
+    //   'window.jQuery': 'jquery',
+    //   'window.$': 'jquery',
+    //   _map:['lodash','map'] // 模块  导出对象
+    // }),
+    // new webpack.DllReferencePlugin({       // 敲黑板，这里是重点
+    //   context: __dirname,                  // 同那个dll配置的路径保持一致
+    //   manifest: require('./vendor.manifest.json') // manifest的缓存信息
+    // }),
     new MiniCssExtractPlugin({
       filename: "[name]/css/[name].css"
     })
@@ -119,22 +119,22 @@ const config = {
     extensions: ['.ts', '.tsx', '.js']
   },
   // 优化部分包括代码拆分
-  optimization: {
-    splitChunks: {
-      chunks: 'async',
-      cacheGroups: {
-        vendors: {
-          test: /[\\/]node_modules[\\/]/,
-          priority: -10
-        },
-        default: {
-          minChunks: 2,
-          priority: -20,
-          reuseExistingChunk: true
-        }
-      }
-    }
-  }
+  // optimization: {
+  //   splitChunks: {
+  //     chunks: 'async',
+  //     cacheGroups: {
+  //       vendors: {
+  //         test: /[\\/]node_modules[\\/]/,
+  //         priority: -10
+  //       },
+  //       default: {
+  //         minChunks: 2,
+  //         priority: -20,
+  //         reuseExistingChunk: true
+  //       }
+  //     }
+  //   }
+  // }
 };
 
 

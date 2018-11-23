@@ -8,6 +8,6 @@ module.exports = function (config) {
     port: 4200,
     hot: true,
     historyApiFallback: true,
-    open: true
+    // open: true
   }
 }
